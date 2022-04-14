@@ -141,16 +141,17 @@ class Graph {
 
     while(toVisitStack.length > 0){
       let current = toVisitStack.pop();
+      let arr= [];
 
       for(let f of current.adjacent){
-
         if (!seen.has(f)) {
           toVisitStack.push(f);
           seen.add(f);
-          let nodesNum = Math.min(this.distanceOfShortestPath(f, end, distance + 1, seen) || 0)
-          return nodesNum;
+          let x = this.distanceOfShortestPath(f, end, distance + 1, seen) || 0;
+          arr.push(x);
         }
       }
+      return Math.min(...arr);
     }
   }
 }
