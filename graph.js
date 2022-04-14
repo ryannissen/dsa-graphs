@@ -82,7 +82,6 @@ class Graph {
           seen.add(neighbor);
         }
       }
-
     }
     console.log(output);
     return output;
@@ -112,7 +111,74 @@ class Graph {
    }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) { }
+  distanceOfShortestPath(start, end, distance = 0, seen) {
+    // let toVisitStack= [start];
+    // let seen= new Set(start);
+    // let distanceArr = [];
+    // let count = 0;
+
+    // while (toVisitStack.length > 0) {
+    //   let currPerson = toVisitStack.pop();
+    //   count++;
+
+    //   if(currPerson.value === end.value) {
+    //     distanceArr.push(count);
+    //     count -= 1;
+
+    //   }
+
+    //   for (let neighbor of currPerson.adjacent) {
+    //     if (!seen.has(neighbor)) {
+    //       toVisitStack.push(neighbor);
+    //       seen.add(neighbor);
+    //     }
+    //   }
+    // }
+
+    if(start === end) return distance;
+    let toVisitStack= [start];
+    let seen = new Set(start);
+
+    while(toVisitStack.length > 0){
+      let current = toVisitStack.pop();
+
+      for(let f of current.adjacent){
+
+        if (!seen.has(f)) {
+          toVisitStack.push(f);
+          seen.add(f);
+          let nodesNum = Math.min(this.distanceOfShortestPath(f, end, distance + 1, seen) || 0)
+          return nodesNum;
+        }
+      }
+    }
+  }
 }
 
 module.exports = { Graph, Node }
+
+/*
+call(r)
+stack = [t]
+seen = Set(r,t)
+
+r adjancent = [t,i,h]
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+
+call(t)
+stack = [i]
+seen = [r, t, i]
+
+t adjancent = [r, i, h]
+
+!!!!!!!!!!!!!!!!!!!!!!!!
+
+call(i)
+stack = []
+seen = [r,t,i]
+
+i adjancet = [r,t]
+
+
+*/
